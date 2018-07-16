@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dashboard</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<!-- navbar -->
+	<div class="navbar-fixed">
+		<nav class="red pad nav-extended fixed">
+			<div class="nav-wrapper">
+				<a href="#" class="brand-logo">Dashboard</a>
+				<a href="#modal1" class="btn-floating btn-large halfway-fab waves-effect waves-light blue modal-trigger">
+					<i class="material-icons">add</i>
+				</a>
+			</div>
+		</nav>
+	</div>
+	<!-- modal -->
+	<div id="modal1" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			<div class="row">
+				<div class="col m4">
+					<b>Create New Invoice</b><br><br>
+					<span class="cust-det">CUSTOMER DETAILS</span>
+					<span class="prod-det" hidden>PRODUCT DETAILS</span>
+				</div>
+				<div class="col m4">
+					<span class="grey-text">ORDER NO. 1234</span>
+				</div>
+				<div class="col m4 cust-det">
+					<a id="skip" class="waves-effect waves-light btn-small right white blue-text cust-det"><i class="material-icons right">forward</i>SKIP</a>
+				</div>
+				<div class="col m4 prod-det customer" hidden>
+					<span class="grey-text">CUSTOMER DETAILS</span>
+					<a id="edit" class="waves-effect waves-light right prod-det"><i class="material-icons right">edit</i></a><br>
+					<b class="full_name">***</b><br>
+					<span class="email">***</span>
+				</div>
+			</div>
+			<hr>
+
+			<!-- customer details -->
+			<div class="row cust-det">
+				<form id="cust-form" class="col s12">
+					<div class="row">
+						<div class="input-field col s6">
+							<input id="full_name" type="text" class="validate" required>
+							<label for="full_name">Full Name</label>
+						</div>
+						<div class="input-field col s6">
+							<input id="phone" type="number" class="validate" required>
+							<label for="phone">Phone Number</label>
+						</div>
+					 	<div class="input-field col s6">
+					 		<textarea id="address" class="materialize-textarea"></textarea>
+					 		<label for="address">Address</label>
+					 	</div>
+						<div class="input-field col s6">
+							<input id="email" type="email" class="validate" required>
+							<label for="email">Email ID</label>
+						</div>
+						<div class="input-field col s6">
+							<input id="pin" type="number" class="validate" required>
+							<label for="pin">Pincode</label>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<!-- product details -->
+			<div class="prod-det" hidden>
+				<table class="responsive-table centered">
+					<thead>
+						<tr>
+							<th>Item</th>
+							<th>Quantity</th>
+							<th>Price - &#8377;</th>
+						</tr>
+					</thead>
+
+					<tbody id="new-item"></tbody>
+				</table>
+
+				<!-- new product -->
+				<form id="item-form" class="col s12">
+					<div class="row">
+						<div class="input-field col m3 offset-m1">
+							<input id="item" type="text" class="validate" placeholder="item" required>
+						</div>
+						<div class="input-field col m2 offset-m1">
+							<input id="qty" type="number" class="validate" placeholder="0.00" required>
+						</div>
+						<div class="input-field col m2 offset-m1">
+							<input id="price" type="number" class="validate" placeholder="0.00" required>
+						</div>
+						<div class="input-field col m1 offset-m1">
+							<a id="add" class="waves-effect waves-light btn right prod-det"><i class="material-icons">keyboard_return</i></a>
+						</div>
+					</div>
+				</form>
+
+				<!-- tax and discount -->
+				<form id="form" class="col s12">
+					<div class="row">
+						<div class="input-field col m2 offset-m1">
+							<input id="tax1" type="text" class="validate" required>
+							<label for="tax1">Tax %</label>
+						</div>
+						<div class="input-field col m2 offset-m1">
+							<input id="discount1" type="number" class="validate" required>
+							<label for="discount1">Discount %</label>
+						</div>
+						<div class="input-field col m3 offset-m2">
+							<p>Sub Total
+								<span class="right" id="sub-total1"></span>
+							</p>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<!-- modal footer -->
+		<div class="modal-footer">
+			<div class="row footer">
+				<div class="col m2">
+					<span class="prod-det" hidden>Tax</span>
+					<span class="prod-det" id="tax-footer"></span>
+				</div>
+				<div class="col m2 offset-m1">
+					<span class="prod-det" hidden>Discount</span>
+					<span class="prod-det" id="discount-footer"></span>
+				</div>
+				<div class="col m2 offset-m1">
+					<span class="prod-det" hidden>Grand Total</span>
+					<span class="prod-det" id="grand-total-footer"></span>
+				</div>
+				<div class="col m4">
+					<div class="cust-det right">
+						<a id="proceed" class="waves-effect waves-green btn blue">Proceed</a>
+					</div>
+					<div class="prod-det right" hidden>
+						<a id="save" class="waves-effect waves-green btn blue modal-close">Save</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- invoices list -->
+	<ul id="invoices" class="sidenav sidenav-fixed collection grey darken-4 white-text hide-on-small-only">
+		<li class="search">
+			<div class="input-field">
+				<input id="search" placeholder="Search" type="text" class="validate">
+			</div>
+		</li>
+	</ul>
+
+	<!-- invoice detail -->
+	<main>
+		<div class="row">
+			<h6 class="col">Invoice Details</h6>
+		</div>
+
+		<div class="row">
+			<div class="col s12 m12">
+				<div class="card">
+					<div id="active-invoice" class="card-content row black-text"></div>
+
+					<table class="responsive-table centered">
+						<thead>
+							<tr>
+								<th>Item</th>
+								<th>Quantity</th>
+								<th>Price - &#8377;</th>
+							</tr>
+						</thead>
+
+						<tbody id="items"></tbody>
+					</table>
+					<div class="total row">
+						<div class="col s12 m3 offset-m7">
+							<p>Sub Total
+								<span class="right">&#8377;<span id="sub-total"></span></span>
+							</p>
+							<p>Tax(12.36%)
+								<span class="right">&#8377;<span id="tax"></span></span>
+							</p>
+							<p>Discount(10%)
+								<span class="right">&#8377;<span id="discount"></span></span>
+							</p>
+							<p><b>Grand Total
+								<span class="right">&#8377;<span id="grand-total"></span></span></b>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded', function() {
+			var elems = document.querySelectorAll('.modal')
+			var instances = M.Modal.init(elems)
+		})
+	</script>
+</body>
+</html>

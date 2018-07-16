@@ -1,0 +1,36 @@
+.sidenav-fixed {
+	margin-top: 64px;
+	border: #212121;
+}
+#search {
+	padding: 0 45px 0 30px;
+}
+.pad {
+	padding: 0 20px;
+}
+@media only screen and (min-width: 600px) {
+	main {
+		margin-left: 320px;
+	}
+}
+table {
+	padding-left: 20px;
+}
+.total {
+	margin-top: 30px;
+}
+.value {
+	margin-left: 10px;
+}
+.invoice-item {
+	cursor: pointer;
+}
+hr {
+	border: 1px solid #ccc;
+}
+#proceed, #save {
+	margin-right: 6px;
+}
+.footer {
+	margin: 0;
+}
