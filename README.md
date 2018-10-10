@@ -1,4 +1,4 @@
-# windinho.github.io
+# windinho
 I've used Nodejs for sending the data stored as a json
 ## Steps to follow
 * cd into ```weave``` folder
